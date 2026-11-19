@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balaton Park Circuit — For Brands</title>
+<meta name="description" content="Launches, driving programmes, conferences and expos at Balaton Park Circuit — the whole site, exclusively yours.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-67602KDENV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-67602KDENV');
+</script>
+<style>
+  :root {
+    --navy: #122036;
+    --navy-deep: #0a1422;
+    --red: #427ab7;
+    --red-glow: rgba(66, 122, 183, 0.45);
+    --ink: #f5f7fb;
+    --muted: rgba(245, 247, 251, 0.72);
+    --border: rgba(255,255,255,0.14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--navy-deep);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+  html { scroll-snap-type: y proximity; }
+  ::selection { background: var(--red); color: white; }
+  .progress {
+    position: fixed; top: 0; left: 0;
+    height: 3px; width: 0;
+    background: var(--red);
+    z-index: 100;
+    box-shadow: 0 0 10px var(--red-glow);
+    transition: width .15s ease-out;
+  }
+  .topbar {
+    position: fixed;
+    top: 0; right: 0;
+    padding: 22px 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .corner-logo {
+    position: fixed;
+    bottom: 28px;
+    right: 32px;
+    z-index: 50;
+    height: 56px;
+    pointer-events: none;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,.55));
+    opacity: 0.95;
+    transition: opacity .3s;
+  }
+  @media (max-width: 760px) {
+    .corner-logo { height: 38px; bottom: 18px; right: 18px; }
+  }
+  .section {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+  }
+  .section::before, .section::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 18vh;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .section::before {
+    top: 0;
+    background: linear-gradient(180deg, var(--navy-deep) 0%, rgba(10,20,34,0) 100%);
+  }
+  .section::after {
+    bottom: 0;
+    background: linear-gradient(0deg, var(--navy-deep) 0%, rgba(10,20,34,0) 100%);
+  }
+  .bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  .bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10,20,34,.45) 0%, rgba(10,20,34,.7) 100%);
+  }
+  .section.dark .bg::after {
+    background: linear-gradient(180deg, rgba(10,20,34,.7) 0%, rgba(10,20,34,.92) 100%);
+  }
+  .section.side .bg::after {
+    background: linear-gradient(90deg, rgba(10,20,34,.92) 0%, rgba(10,20,34,.55) 55%, rgba(10,20,34,.15) 100%);
+  }
+  /* Mirrored: copy on the right, so the subject on the left stays clear */
+  .section.side-right .bg::after {
+    background: linear-gradient(270deg, rgba(10,20,34,.92) 0%, rgba(10,20,34,.55) 55%, rgba(10,20,34,.15) 100%);
+  }
+  .section.side-right .content { align-items: flex-end; text-align: right; }
+  .section.side-right .content .eyebrow::before { display: none; }
+  .section.side-right .content p { margin-left: auto; }
+  @media (max-width: 760px) {
+    .section.side-right .bg::after {
+      background: linear-gradient(0deg, rgba(10,20,34,.94) 0%, rgba(10,20,34,.5) 55%, rgba(10,20,34,.3) 100%);
+    }
+    .section.side-right .content { align-items: flex-start; text-align: left; }
+    .section.side-right .content p { margin-left: 0; }
+  }
+  /* Photo-led slide: short copy up top, picture left alone */
+  .content.top { justify-content: flex-start; padding-top: 14vh; }
+  /* Where the subject sits low in frame, don't let the bottom fade eat it */
+  .section.keep-foot::after { height: 7vh; }
+  .content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 12vh 8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .content.center { align-items: center; text-align: center; }
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(.22,.61,.36,1), transform 1s cubic-bezier(.22,.61,.36,1);
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal.d1 { transition-delay: .15s; }
+  .reveal.d2 { transition-delay: .3s; }
+  .reveal.d3 { transition-delay: .45s; }
+  .reveal.d4 { transition-delay: .6s; }
+  .reveal.slide-left { transform: translateX(-50px); }
+  .reveal.slide-left.in { transform: translateX(0); }
+  .reveal.slide-right { transform: translateX(50px); }
+  .reveal.slide-right.in { transform: translateX(0); }
+  .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    font-size: clamp(11px, 1vw, 14px);
+    color: #a8cef0;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 2px;
+    background: #a8cef0;
+    vertical-align: middle;
+    margin-right: 14px;
+    transform: translateY(-3px);
+    box-shadow: 0 0 8px rgba(168, 206, 240, 0.5);
+  }
+  .eyebrow.light { color: #ffffff; }
+  .eyebrow.light::before { background: #ffffff; }
+  h1, h2, h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+  }
+  h1 { font-size: clamp(48px, 8.5vw, 130px); margin-bottom: 1.5rem; }
+  h2 { font-size: clamp(36px, 5.5vw, 86px); margin-bottom: 1.5rem; }
+  h3 { font-size: clamp(22px, 2.6vw, 38px); margin-bottom: 1rem; font-weight: 700; }
+  p {
+    font-size: clamp(15px, 1.25vw, 19px);
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 650px;
+  }
+  p.lead {
+    font-size: clamp(18px, 1.6vw, 24px);
+    color: var(--ink);
+    font-weight: 300;
+    max-width: 720px;
+  }
+  .red { color: var(--red); }
+  strong { color: var(--ink); font-weight: 600; }
+  .hero-title { font-size: clamp(56px, 11vw, 180px); line-height: 0.88; }
+  .hero-title .line { display: block; }
+  .hero-title .accent { color: var(--red); position: relative; }
+  .scroll-cue {
+    position: absolute;
+    bottom: 50px; left: 50%;
+    transform: translateX(-50%);
+    color: var(--muted);
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 11px;
+    z-index: 5;
+    animation: bounce 2.4s ease-in-out infinite;
+  }
+  .scroll-cue::after {
+    content: '';
+    display: block;
+    width: 1px; height: 32px;
+    background: linear-gradient(180deg, var(--red), transparent);
+    margin: 12px auto 0;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: .8; }
+    50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    width: 100%;
+  }
+  .two-col.flip { grid-template-columns: 1fr 1.1fr; }
+  .two-col .visual {
+    position: relative;
+    height: 65vh;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 30px 90px rgba(0,0,0,.5);
+  }
+  .two-col .visual img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 12s ease-out;
+    transform: scale(1.05);
+  }
+  .two-col .visual.in img { transform: scale(1); }
+  /* Hotel video bg */
+  .bg-video { position:absolute;inset:0;z-index:0;overflow:hidden; }
+  .bg-video video { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55; }
+  .bg-video::after { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,20,34,.15) 0%,rgba(10,20,34,.42) 100%); }
+  /* Galleries */
+  .gallery-wrap { position:absolute;inset:0; }
+  .gallery-slide { position:absolute;inset:0;opacity:0;transition:opacity .6s ease; }
+  .gallery-slide.active { opacity:1; }
+  .gallery-slide img { width:100%;height:100%;object-fit:cover; }
+  .gallery-caption-intro { position:absolute;bottom:0;left:0;right:0;padding:14px 18px 12px;background:linear-gradient(transparent,rgba(0,0,0,0.7));font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.85); }
+  .gallery-arrow { position:absolute;top:50%;transform:translateY(-50%);width:60px;height:60px;border-radius:50%;background:rgba(10,20,34,0.55);border:2px solid rgba(255,255,255,0.55);color:#fff;font-size:32px;cursor:pointer;z-index:6;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s;line-height:1;backdrop-filter:blur(4px); }
+  .gallery-arrow:hover { background:rgba(67,126,209,0.85);border-color:#437ed1; }
+  .gallery-prev-intro { left:14px; }
+  .gallery-next-intro { right:14px; }
+  .gallery-dots { position:absolute;bottom:50px;left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:6; }
+  .gallery-dot { width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.35);border:none;padding:0;cursor:pointer;transition:background .25s,transform .25s; }
+  .gallery-dot.active { background:#fff;transform:scale(1.3); }
+  /* Three pillars */
+  .pillars { display:grid;grid-template-columns:repeat(3,1fr);gap:1.75rem;width:100%;margin-top:2.5rem; }
+  .pillar { background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;overflow:hidden;text-align:left; }
+  .pillar img { width:100%;height:220px;object-fit:cover;display:block; }
+  .pillar .body { padding:22px 22px 26px; }
+  .pillar h3 { font-size:clamp(19px,1.8vw,26px);margin-bottom:.6rem; }
+  .pillar p { font-size:15px;line-height:1.55; }
+  @media(max-width:860px){ .pillars{grid-template-columns:1fr;} .pillar img{height:200px;} }
+  /* Track layouts */
+  .layouts-intro { display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;width:100%;margin-top:2.5rem; }
+  .layout-intro-card { background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;overflow:hidden;text-align:center; }
+  .layout-intro-card img { width:100%;display:block; }
+  .layout-intro-label { padding:12px 0;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#a8cef0; }
+  @media(max-width:768px){ .layouts-intro{grid-template-columns:1fr;} }
+  .facilities {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem 2.5rem;
+    margin-top: 2.5rem;
+    max-width: 760px;
+  }
+  .fac { display:flex;align-items:center;gap:1rem;font-size:17px;color:var(--ink);font-weight:500; }
+  .fac .dot { width:8px;height:8px;background:var(--red);border-radius:50%;flex-shrink:0; }
+  .reach-list {
+    list-style: none;
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.9rem 2rem;
+    max-width: 600px;
+  }
+  .reach-list li {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: .7rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .reach-list li .km { color: var(--red); }
+  .marquee {
+    overflow: hidden;
+    margin-top: 2.5rem;
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 4rem;
+    animation: scroll 40s linear infinite;
+    white-space: nowrap;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: clamp(24px, 2.6vw, 42px);
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.22);
+  }
+  .marquee-track span.hot { color: var(--red); }
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .cta-buttons { display:flex;gap:1rem;margin-top:3rem;flex-wrap:wrap;justify-content:center; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 32px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 15px;
+    transition: all .3s;
+    border: 1px solid transparent;
+  }
+  .btn.primary { background:var(--red);color:white;box-shadow:0 12px 40px var(--red-glow); }
+  .btn.primary:hover { transform:translateY(-3px);box-shadow:0 18px 50px var(--red-glow); }
+  .btn.ghost { border-color:var(--border);color:var(--ink);background:rgba(255,255,255,0.04); }
+  .btn.ghost:hover { background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.3);transform:translateY(-3px); }
+  .social-icons { display:flex;gap:1rem;margin-top:1.75rem;justify-content:center; }
+  .icon-btn {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04);
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s;
+  }
+  .icon-btn:hover { background:var(--red);border-color:var(--red);transform:translateY(-3px);box-shadow:0 12px 30px var(--red-glow); }
+  .icon-btn svg { width:22px;height:22px; }
+  footer {
+    padding: 40px;
+    text-align: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 760px) {
+    html { scroll-snap-type: none; }
+    .two-col, .two-col.flip { grid-template-columns: 1fr; gap: 2rem; }
+    .two-col .visual { height: 38vh; min-height: 260px; }
+    .facilities, .reach-list { grid-template-columns: 1fr; }
+    .topbar { padding: 14px 16px; }
+    .content { padding: 10vh 6vw; }
+    .corner-logo { height: 34px; bottom: 14px; right: 14px; opacity: 0.85; }
+    .scroll-cue { bottom: 28px; font-size: 10px; }
+    .scroll-cue::after { height: 22px; }
+    .eyebrow { letter-spacing: 0.24em; margin-bottom: 1rem; }
+    .eyebrow::before { width: 22px; margin-right: 10px; }
+    .reach-list { font-size: 18px; }
+    .cta-buttons .btn { width: 100%; justify-content: center; }
+    .icon-btn { width: 56px; height: 56px; }
+    .gallery-arrow { width: 44px; height: 44px; font-size: 24px; }
+  }
+  @media (hover: none) {
+    .icon-btn:hover, .btn.primary:hover, .btn.ghost:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<header class="topbar" id="topbar"></header>
+<img src="bpc-white-text-logo.png" alt="Balaton Park Circuit" class="corner-logo" id="cornerLogo">
+<main>
+
+  <!-- 1. HERO -->
+  <section class="section">
+    <div class="bg" style="background-image:url('hero-roma.jpg')"></div>
+    <div class="content">
+      <div class="eyebrow reveal light" data-edit>A CIRCUIT YOU CAN HAVE ALL TO YOURSELF.</div>
+      <h1 class="hero-title reveal d1">
+        <span class="line" data-edit>BALATON PARK</span>
+        <span class="line"><span class="accent" data-edit>FOR BRANDS</span>.</span>
+      </h1>
+      <p class="lead reveal d2" data-edit style="margin-top:2rem;">A homologated circuit, a 4-star hotel on the paddock and empty country roads outside the gate - bookable as one venue, exclusively yours.</p>
+    </div>
+    <div class="scroll-cue">Scroll</div>
+  </section>
+
+  <!-- 2. THE PROPOSITION -->
+  <section class="section dark">
+    <div class="bg" style="background-image:url('launch-fleet-pitlane.jpg')"></div>
+    <div class="content">
+      <div class="eyebrow reveal" data-edit>The proposition</div>
+      <h2 class="reveal d1"><span data-edit>The whole place.</span><br><span data-edit>Only your badge.</span></h2>
+      <p class="lead reveal d2" data-edit>Most circuits sell you a slot between someone else's. Balaton Park hands over the site - track, pit lane, garages, hospitality floors, paddock and every piece of signage on it - for a day or a week.</p>
+      <p class="reveal d3" data-edit style="margin-top:1.5rem;">Your cars are the only cars. Your logo is the only logo. Nobody's guests are queuing behind somebody else's.</p>
+      <div class="marquee reveal d4">
+        <div class="marquee-track">
+          <span data-edit>Porsche</span><span class="hot" data-edit>BMW</span><span data-edit>Ferrari</span><span data-edit>Audi</span><span class="hot" data-edit>Mercedes-Benz</span><span data-edit>Cupra</span><span data-edit>Volkswagen</span><span class="hot" data-edit>Škoda</span><span data-edit>Ayvens</span><span data-edit>LeasePlan</span>
+          <span data-edit>Porsche</span><span class="hot" data-edit>BMW</span><span data-edit>Ferrari</span><span data-edit>Audi</span><span class="hot" data-edit>Mercedes-Benz</span><span data-edit>Cupra</span><span data-edit>Volkswagen</span><span class="hot" data-edit>Škoda</span><span data-edit>Ayvens</span><span data-edit>LeasePlan</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. THREE THINGS BRANDS DO HERE -->
+  <section class="section dark">
+    <div class="bg" style="background-image:url('control-tower.jpg')"></div>
+    <div class="content center">
+      <div class="eyebrow reveal" data-edit>What brands run here</div>
+      <h2 class="reveal d1" style="margin-bottom:0;"><span data-edit>Three kinds of day.</span></h2>
+      <div class="pillars reveal d2">
+        <div class="pillar">
+          <img src="launch-xm-ledwall.jpg" alt="Product launch on the LED stage" loading="lazy">
+          <div class="body">
+            <h3 data-edit>Launches &amp; press days</h3>
+            <p data-edit>Reveal it indoors, then drive it the same afternoon. Stage, LED walls and a pit lane that works as a ramp.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <img src="drive-296-pitlane.jpg" alt="Driving programme fleet in the pit lane" loading="lazy">
+          <div class="body">
+            <h3 data-edit>Driving programmes</h3>
+            <p data-edit>Customer days, dealer incentives, press drives. Track, handling area and country roads in one programme.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <img src="conf-packed-audience.jpg" alt="Conference in the panoramic hall" loading="lazy">
+          <div class="body">
+            <h3 data-edit>Conferences &amp; expos</h3>
+            <p data-edit>Hundreds seated in the panoramic hall, stands and test fleets on the apron right outside it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. LAUNCHES -->
+  <section class="section">
+    <div class="bg" style="background-image:url('launch-m4-garage.jpg')"></div>
+    <div class="content">
+      <div class="two-col">
+        <div>
+          <div class="eyebrow reveal" data-edit>Launches &amp; press days</div>
+          <h2 class="reveal d1"><span data-edit>A stage</span><br><span data-edit>that drives.</span></h2>
+          <p class="lead reveal d2" data-edit>The car can be under covers in a closed garage in the morning, on an LED-lit stage in front of your dealer network at noon, and on circuit with journalists in it by two.</p>
+          <p class="reveal d3" data-edit style="margin-top:1.5rem;">Everything stays on one site - no transfers, no convoy through traffic, no second venue to brief. Closed gates mean embargoes hold.</p>
+        </div>
+        <div class="visual reveal slide-right" style="overflow:visible;">
+          <div class="gallery-wrap" data-gallery="launch">
+            <div class="gallery-slide active"><img src="launch-xm-presenter.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Model reveal, LED stage</div></div>
+            <div class="gallery-slide"><img src="launch-m2-lounge.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Car in the branded lounge</div></div>
+            <div class="gallery-slide"><img src="launch-i5-presentation.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Product presentation</div></div>
+            <div class="gallery-slide"><img src="launch-performance-parts.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Brand space, pit level</div></div>
+            <div class="gallery-slide"><img src="venue-porsche-plinth.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Display plinth, indoors</div></div>
+            <div class="gallery-slide"><img src="venue-sprint-wall.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Full-site branding</div></div>
+            <div class="gallery-slide"><img src="launch-ledwall-convertible.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">LED wall &amp; hero car</div></div>
+            <div class="gallery-slide"><img src="venue-rainbow-car.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Art-car installation</div></div>
+            <div class="gallery-slide"><img src="launch-m2-front.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Static display</div></div>
+            <div class="gallery-slide"><img src="launch-motorcycles.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Two wheels, same site</div></div>
+          </div>
+          <button class="gallery-arrow gallery-prev-intro" onclick="gal('launch',-1)">&#8249;</button>
+          <button class="gallery-arrow gallery-next-intro" onclick="gal('launch',1)">&#8250;</button>
+          <div class="gallery-dots" data-dots="launch"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. DRIVING PROGRAMMES -->
+  <section class="section">
+    <div class="bg" style="background-image:url('drive-296-rearline.jpg')"></div>
+    <div class="content">
+      <div class="two-col flip">
+        <div class="visual reveal slide-left" style="overflow:visible;">
+          <div class="gallery-wrap" data-gallery="drive">
+            <div class="gallery-slide active"><img src="drive-296-lineup.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Fleet staged in the pit lane</div></div>
+            <div class="gallery-slide"><img src="drive-briefing.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Driver briefing</div></div>
+            <div class="gallery-slide"><img src="drive-helmets-white.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Kit, issued on site</div></div>
+            <div class="gallery-slide"><img src="drive-296-flags.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Brand dressing, pit apron</div></div>
+            <div class="gallery-slide"><img src="drive-pitbuilding-flags.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Pit building, taken over</div></div>
+            <div class="gallery-slide"><img src="drive-296-rear.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Numbered for the day</div></div>
+            <div class="gallery-slide"><img src="arch-departure.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Rolling out through the gate</div></div>
+            <div class="gallery-slide"><img src="venue-experience-car.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Experience fleet</div></div>
+            <div class="gallery-slide"><img src="drive-ferrari-detail.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Details for the camera</div></div>
+            <div class="gallery-slide"><img src="venue-briefing-helmets.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Briefing room</div></div>
+          </div>
+          <button class="gallery-arrow gallery-prev-intro" onclick="gal('drive',-1)">&#8249;</button>
+          <button class="gallery-arrow gallery-next-intro" onclick="gal('drive',1)">&#8250;</button>
+          <div class="gallery-dots" data-dots="drive"></div>
+        </div>
+        <div>
+          <div class="eyebrow reveal d1" data-edit>Driving programmes</div>
+          <h2 class="reveal d2"><span data-edit>Seat time,</span><br><span data-edit>without the queue.</span></h2>
+          <p class="lead reveal d3" data-edit>Garages, fuel, timing, instructors and medical cover are already here. Groups rotate between circuit sessions, handling exercises and road drives - and nobody waits for another client's session to finish.</p>
+          <div class="facilities reveal d4">
+            <div class="fac"><span class="dot"></span><span data-edit>Customer &amp; VIP days</span></div>
+            <div class="fac"><span class="dot"></span><span data-edit>Dealer incentives</span></div>
+            <div class="fac"><span class="dot"></span><span data-edit>Press drives</span></div>
+            <div class="fac"><span class="dot"></span><span data-edit>Film &amp; photo shoots</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. THE COUNTRY ROADS -->
+  <section class="section side-right keep-foot">
+    <div class="bg" style="background-image:url('road-solo.jpg');background-position:center 30%;"></div>
+    <div class="content">
+      <div class="eyebrow reveal" data-edit>Beyond the gate</div>
+      <h2 class="reveal d1"><span data-edit>And the roads</span><br><span data-edit>around it.</span></h2>
+      <p class="lead reveal d2" data-edit>The circuit sits in open farmland between Lake Balaton and the M7. Minutes from the gate there are quiet, well-surfaced country roads - long sightlines, almost no traffic, and nothing in the frame but crops, poplars and sky.</p>
+      <p class="reveal d3" data-edit style="margin-top:1.5rem;">The road-drive leg of a launch programme, rolling photography and film, or simply the part of the day where guests just drive. Then back through the gate for lunch.</p>
+    </div>
+  </section>
+
+  <!-- 7. CONVOY — photo-led, copy kept above the cars -->
+  <section class="section">
+    <div class="bg" style="background-image:url('road-convoy.jpg');background-position:center 35%;"></div>
+    <div class="content center top">
+      <div class="eyebrow reveal light" data-edit>On the road</div>
+      <h2 class="reveal d1" style="margin-bottom:.75rem;"><span data-edit>Convoy country.</span></h2>
+      <p class="lead reveal d2" style="text-align:center;" data-edit>Wide enough to run a convoy. Empty enough to shoot one.</p>
+    </div>
+  </section>
+
+  <!-- 8. ADVERSE WEATHER -->
+  <section class="section side">
+    <div class="bg" style="background-image:url('weather-ferrari-coffee.jpg')"></div>
+    <div class="content">
+      <div class="eyebrow reveal" data-edit>Whatever the weather</div>
+      <h2 class="reveal d1"><span data-edit>Rain changes</span><br><span data-edit>the running order.</span></h2>
+      <p class="lead reveal d2" data-edit>Not the booking. Pit garages convert into lounges, display space and dining rooms in a couple of hours - power, light and floor already in place - and the hall above stays warm and dry.</p>
+      <p class="reveal d3" data-edit style="margin-top:1.5rem;">The track doesn't close for rain either. Wet running on a circuit with run-off is a feature of the programme, not a problem with it.</p>
+    </div>
+  </section>
+
+  <!-- 9. HOSPITALITY -->
+  <section class="section">
+    <div class="bg" style="background-image:url('weather-lounge-lamps.jpg')"></div>
+    <div class="content">
+      <div class="two-col flip">
+        <div class="visual reveal slide-left" style="overflow:visible;">
+          <div class="gallery-wrap" data-gallery="hosp">
+            <div class="gallery-slide active"><img src="venue-reception.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Reception &amp; bar</div></div>
+            <div class="gallery-slide"><img src="hosp-buffet-flowers.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Buffet service</div></div>
+            <div class="gallery-slide"><img src="hosp-canapes.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Canapés</div></div>
+            <div class="gallery-slide"><img src="hosp-table-long.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Long table, pit level</div></div>
+            <div class="gallery-slide"><img src="hosp-espresso.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Coffee service</div></div>
+            <div class="gallery-slide"><img src="hosp-spread-plants.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Lounge catering</div></div>
+            <div class="gallery-slide"><img src="hosp-fruit.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Fresh service all day</div></div>
+            <div class="gallery-slide"><img src="venue-catering.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Dessert service</div></div>
+            <div class="gallery-slide"><img src="hosp-helmet-wall.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Branded kit wall</div></div>
+          </div>
+          <button class="gallery-arrow gallery-prev-intro" onclick="gal('hosp',-1)">&#8249;</button>
+          <button class="gallery-arrow gallery-next-intro" onclick="gal('hosp',1)">&#8250;</button>
+          <div class="gallery-dots" data-dots="hosp"></div>
+        </div>
+        <div>
+          <div class="eyebrow reveal d1" data-edit>Hospitality</div>
+          <h2 class="reveal d2"><span data-edit>Fed, watered,</span><br><span data-edit>looked after.</span></h2>
+          <p class="lead reveal d3" data-edit>In-house kitchen and service across the whole site - pit lounges, hospitality floors, the paddock and the restaurant next door at the hotel. From espresso between sessions to a seated dinner.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. CONFERENCES & EXPOS -->
+  <section class="section">
+    <div class="bg" style="background-image:url('conf-hall-wide.jpg')"></div>
+    <div class="content">
+      <div class="two-col">
+        <div>
+          <div class="eyebrow reveal" data-edit>Conferences, fleet days &amp; expos</div>
+          <h2 class="reveal d1"><span data-edit>Hundreds inside.</span><br><span data-edit>Hundreds outside.</span></h2>
+          <p class="lead reveal d2" data-edit>The panoramic hall above the pit lane runs as a full conference theatre, with the apron immediately outside it for stands, test fleets and ride-alongs.</p>
+          <p class="reveal d3" data-edit style="margin-top:1.5rem;">Multi-marque fleet expos have run here exactly that way - presentations in the morning, cars in the afternoon, catering throughout, everyone under one roof when it rains.</p>
+        </div>
+        <div class="visual reveal slide-right" style="overflow:visible;">
+          <div class="gallery-wrap" data-gallery="conf">
+            <div class="gallery-slide active"><img src="conf-stage-speaker.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Main stage</div></div>
+            <div class="gallery-slide"><img src="conf-led-audience.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Full house</div></div>
+            <div class="gallery-slide"><img src="conf-empty-theatre.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Theatre layout, ready</div></div>
+            <div class="gallery-slide"><img src="conf-empty-rows.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Panoramic hall</div></div>
+            <div class="gallery-slide"><img src="expo-led-stage.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Branded stage set</div></div>
+            <div class="gallery-slide"><img src="expo-hall-cars.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Cars inside the hall</div></div>
+            <div class="gallery-slide"><img src="expo-audi-stand.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Marque stand, indoors</div></div>
+            <div class="gallery-slide"><img src="expo-skoda-stand.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Display lighting</div></div>
+            <div class="gallery-slide"><img src="conf-vw-stand.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Outdoor stands</div></div>
+            <div class="gallery-slide"><img src="conf-cupra-tent.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Test fleet, paddock</div></div>
+            <div class="gallery-slide"><img src="conf-audi-stand.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Brand village</div></div>
+            <div class="gallery-slide"><img src="expo-mercedes-stand.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Fleet on the apron</div></div>
+            <div class="gallery-slide"><img src="expo-registration.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Guest registration</div></div>
+            <div class="gallery-slide"><img src="expo-auditorium.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Seated and waiting</div></div>
+            <div class="gallery-slide"><img src="conf-empty-bar.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Break-out &amp; bar</div></div>
+          </div>
+          <button class="gallery-arrow gallery-prev-intro" onclick="gal('conf',-1)">&#8249;</button>
+          <button class="gallery-arrow gallery-next-intro" onclick="gal('conf',1)">&#8250;</button>
+          <div class="gallery-dots" data-dots="conf"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. TRACK LAYOUTS -->
+  <section class="section dark">
+    <div class="bg" style="background-image:url('pit-garages.jpg')"></div>
+    <div class="content center">
+      <div class="eyebrow reveal">Track Layouts</div>
+      <h2 class="reveal d1" style="margin-bottom:0;"><span>Available configurations.</span></h2>
+      <div class="layouts-intro reveal d2">
+        <div class="layout-intro-card">
+          <img src="layout-A.png" alt="Layout A" loading="lazy">
+          <div class="layout-intro-label">Layout A</div>
+        </div>
+        <div class="layout-intro-card">
+          <img src="layout-B.png" alt="Layout B" loading="lazy">
+          <div class="layout-intro-label">Layout B</div>
+        </div>
+        <div class="layout-intro-card">
+          <img src="layout-C.png" alt="Layout C" loading="lazy">
+          <div class="layout-intro-label">Layout C</div>
+        </div>
+      </div>
+      <p class="reveal d3" style="margin-top:1.2rem;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.45);text-align:center;">Other layout combinations available upon request</p>
+    </div>
+  </section>
+
+  <!-- 12. STAY & DINE -->
+  <section class="section">
+    <div class="bg-video"><video autoplay muted loop playsinline><source src="hotel-bg.mp4" type="video/mp4"></video></div>
+    <div class="content">
+      <div class="two-col">
+        <div>
+          <div class="eyebrow reveal" data-edit>Stay &amp; dine</div>
+          <h2 class="reveal d1"><span data-edit>A 4-star hotel</span><br><span data-edit>with TRACK view.</span></h2>
+          <p class="lead reveal d2" data-edit>Over 130 luxurious rooms attached to the paddock. Teams, drivers and VIP's stay at a 1-min walk.<br><br>Lavender Park Restaurant serves high-end meals around the clock including room-service and even box-garage service.</p>
+          <p class="reveal d3" data-edit style="margin-top:1.5rem;"><strong>50+ additional hotels</strong> within 1–15 km of the gate, across every category. Just a 25 mins drive for 5-star hotels and vibrant nightlife on the shores of Balatonfüred.</p>
+          <a href="https://hotel.balatonpark.com" target="_blank" rel="noopener" class="reveal d4" style="display:inline-block;margin-top:1.5rem;padding:9px 22px;border:1px solid rgba(255,255,255,0.45);border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#fff;text-decoration:none;transition:background .2s,border-color .2s;" onmouseover="this.style.background='rgba(255,255,255,0.12)';this.style.borderColor='rgba(255,255,255,0.8)'" onmouseout="this.style.background='';this.style.borderColor='rgba(255,255,255,0.45)'">More Info</a>
+        </div>
+        <div class="visual reveal slide-right" style="overflow:visible;">
+          <div class="gallery-wrap" data-gallery="hotel">
+            <div class="gallery-slide active"><img src="hotel-g-04.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Track-View Room</div></div>
+            <div class="gallery-slide"><img src="hotel-g-01.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">The Grand Lobby</div></div>
+            <div class="gallery-slide"><img src="hotel-g-03.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Lavender in the Park</div></div>
+            <div class="gallery-slide"><img src="hotel-g-05.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Trackside Terrace</div></div>
+            <div class="gallery-slide"><img src="hotel-g-06.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Luxury in Every Detail</div></div>
+            <div class="gallery-slide"><img src="hotel-g-07.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Rooms &amp; VIP Terraces View</div></div>
+            <div class="gallery-slide"><img src="hotel-g-08.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Lavender Park Restaurant</div></div>
+            <div class="gallery-slide"><img src="hotel-g-09.jpg" style="object-position:center top;" alt="" loading="lazy"><div class="gallery-caption-intro">Fine Dining, Track-Side</div></div>
+            <div class="gallery-slide"><img src="hotel-g-02.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Lobby &amp; Common Areas</div></div>
+          </div>
+          <button class="gallery-arrow gallery-prev-intro" onclick="gal('hotel',-1)">&#8249;</button>
+          <button class="gallery-arrow gallery-next-intro" onclick="gal('hotel',1)">&#8250;</button>
+          <div class="gallery-dots" data-dots="hotel"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. STRATEGIC LOCATION -->
+  <section class="section dark">
+    <div class="bg" style="background-image:url('map-europe.jpg')"></div>
+    <div class="content">
+      <div class="eyebrow reveal" data-edit>Strategic location</div>
+      <h2 class="reveal d1"><span data-edit>A drive away from</span><br><span data-edit>six countries.</span></h2>
+      <p class="lead reveal d2" data-edit>At the M7/710 junction at the southern shore of Lake Balaton — Hungary's most-visited holiday region. Guests aren't just coming for the event.</p>
+      <ul class="reach-list reveal d3">
+        <li><span data-edit>Budapest</span> <span class="km" data-edit>85 km</span></li>
+        <li><span data-edit>Slovakia</span> <span class="km" data-edit>120 km</span></li>
+        <li><span data-edit>Austria</span> <span class="km" data-edit>150 km</span></li>
+        <li><span data-edit>Croatia</span> <span class="km" data-edit>150 km</span></li>
+        <li><span data-edit>Czechia</span> <span class="km" data-edit>240 km</span></li>
+        <li><span data-edit>Italy</span> <span class="km" data-edit>480 km</span></li>
+      </ul>
+      <p class="reveal d4" data-edit style="margin-top:2rem;"><strong>Vienna airport</strong> 2h 15m · <strong>Budapest airport</strong> 1h · <strong>On-site landing strip</strong></p>
+    </div>
+  </section>
+
+  <!-- 14. DESTINATION EFFECT -->
+  <section class="section">
+    <div class="bg" style="background-image:url('lake-aerial.jpg')"></div>
+    <div class="content">
+      <div class="two-col">
+        <div class="visual reveal slide-left">
+          <img src="fanzone.png" alt="Balaton Park fan zone" loading="lazy">
+        </div>
+        <div>
+          <div class="eyebrow reveal d1" data-edit>The destination effect</div>
+          <h2 class="reveal d2"><span data-edit>Event day,</span><br><span data-edit>holiday week.</span></h2>
+          <p class="lead reveal d3" data-edit>Lake Balaton is Hungary's largest tourist magnet — beaches, spas, wineries, thermals, sailing and vibrant nightlife. <strong>All within a 10-20 mins drive from the circuit while still just an hour away from Budapest.</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15. CONTACT -->
+  <section class="section dark">
+    <div class="bg" style="background-image:url('hero-roma.jpg')"></div>
+    <div class="content center">
+      <div class="eyebrow reveal" data-edit>Let's talk</div>
+      <h2 class="reveal d1" style="text-align:center;"><span data-edit>Your brand</span><br><span data-edit>at</span> <span class="red" data-edit>Balaton Park</span>.</h2>
+      <p class="lead reveal d2" style="text-align:center;" data-edit>Tell us the dates and the headcount — we'll build the day around them.</p>
+      <div class="cta-buttons reveal d3">
+        <a href="mailto:roy@balatonparkcircuit.com" class="btn primary">
+          Email Us <span>→</span>
+        </a>
+        <a href="https://intro.balatonpark.com" target="_blank" rel="noopener" class="btn ghost">The Circuit</a>
+      </div>
+      <div class="social-icons reveal d4">
+        <a href="https://balatonpark.com" target="_blank" rel="noopener" class="icon-btn" aria-label="Website">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </a>
+        <a href="https://instagram.com/balatonpark" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://wa.me/36306307574" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  &copy; Balaton Park Circuit &middot; <a href="https://balatonparkcircuit.com" target="_blank" rel="noopener" style="color:inherit;">balatonparkcircuit.com</a>
+</footer>
+
+<script>
+  const progress = document.getElementById('progress');
+  const topbar = document.getElementById('topbar');
+  const parallaxEnabled = window.matchMedia('(pointer: fine)').matches && window.innerWidth > 760;
+
+  function onScroll() {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progress.style.width = pct + '%';
+    topbar.classList.toggle('scrolled', h.scrollTop > 60);
+    if (!parallaxEnabled) return;
+    document.querySelectorAll('.section').forEach(s => {
+      const r = s.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < window.innerHeight) {
+        const bg = s.querySelector('.bg');
+        if (bg) {
+          const offset = r.top * 0.25;
+          bg.style.transform = `translateY(${-offset}px) scale(1.1)`;
+        }
+      }
+    });
+  }
+
+  // Galleries — several on this page, each keyed by its data-gallery name
+  const _galIdx = {};
+  function gal(name, dir) {
+    const wrap = document.querySelector('[data-gallery="' + name + '"]');
+    if (!wrap) return;
+    const slides = wrap.querySelectorAll('.gallery-slide');
+    const dots = document.querySelectorAll('[data-dots="' + name + '"] .gallery-dot');
+    const cur = _galIdx[name] || 0;
+    slides[cur].classList.remove('active');
+    if (dots[cur]) dots[cur].classList.remove('active');
+    const next = (cur + dir + slides.length) % slides.length;
+    _galIdx[name] = next;
+    slides[next].classList.add('active');
+    if (dots[next]) dots[next].classList.add('active');
+  }
+
+  document.querySelectorAll('[data-gallery]').forEach(function (wrap) {
+    const name = wrap.getAttribute('data-gallery');
+    _galIdx[name] = 0;
+    const slides = wrap.querySelectorAll('.gallery-slide');
+    const container = document.querySelector('[data-dots="' + name + '"]');
+    if (!container || !slides.length) return;
+    slides.forEach(function (_, i) {
+      const d = document.createElement('button');
+      d.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+      d.onclick = function () { gal(name, i - (_galIdx[name] || 0)); };
+      container.appendChild(d);
+    });
+    // swipe on touch
+    let x0 = null;
+    wrap.addEventListener('touchstart', e => { x0 = e.changedTouches[0].clientX; }, { passive: true });
+    wrap.addEventListener('touchend', e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 45) gal(name, dx < 0 ? 1 : -1);
+      x0 = null;
+    }, { passive: true });
+  });
+
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('in');
+    });
+  }, { threshold: 0.18 });
+  document.querySelectorAll('.reveal, .visual').forEach(el => io.observe(el));
+</script>
+</body></html>
