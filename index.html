@@ -398,7 +398,61 @@
   @media (hover: none) {
     .icon-btn:hover, .btn.primary:hover, .btn.ghost:hover { transform: none; }
   }
-</style>
+  /* Capacity table - the numbers a planner actually asks for */
+  .capwrap { width:100%;max-width:960px;margin-top:0;overflow-x:auto; }
+  .captable { width:100%;min-width:620px;border-collapse:collapse;font-family:'Barlow Condensed',sans-serif; }
+  .captable th {
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#a8cef0;
+    font-weight:700;text-align:right;padding:0 0 7px 14px;border-bottom:1px solid var(--border);white-space:nowrap;
+  }
+  .captable th:first-child { text-align:left;padding-left:0; }
+  .captable td {
+    font-size:18px;font-weight:600;text-align:right;padding:8px 0 8px 14px;
+    border-bottom:1px solid rgba(255,255,255,.08);color:var(--ink);white-space:nowrap;
+  }
+  .captable td:first-child {
+    text-align:left;padding-left:0;text-transform:uppercase;letter-spacing:.03em;
+    font-size:16px;color:rgba(245,247,251,.86);
+  }
+  .captable td.sqm { color:var(--red); }
+  .captable tr:last-child td { border-bottom:none; }
+  .capnote { margin-top:1.1rem;max-width:760px;font-size:14.5px; }
+  .capsub {
+    margin:1.25rem 0 .4rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;
+    font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);
+  }
+  .capsub:first-of-type { margin-top:0; }
+  .captable td.note {
+    text-align:left;font-size:13.5px;font-weight:400;text-transform:none;letter-spacing:0;
+    color:rgba(245,247,251,.62);white-space:normal;line-height:1.45;
+  }
+
+  /* Plans the client can open or download */
+  .plans { display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:2.2rem;width:100%;max-width:960px; }
+  .plan {
+    display:block;padding:16px 17px 13px;text-decoration:none;
+    background:rgba(10,20,34,.55);border:1px solid var(--border);
+    transition:background .25s,border-color .25s,transform .25s;
+  }
+  .plan:hover { background:rgba(66,122,183,.14);border-color:var(--pale);transform:translateY(-2px); }
+  .plan .t {
+    font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:17px;
+    letter-spacing:.05em;text-transform:uppercase;color:var(--ink);
+  }
+  .plan .d { margin-top:5px;font-size:13.5px;line-height:1.5;color:rgba(245,247,251,.58); }
+  .plan .f {
+    margin-top:9px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;color:#a8cef0;
+  }
+  .plan .d { min-height:38px; }
+  @media(max-width:900px){ .plans { grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:560px){ .plans { grid-template-columns:1fr;gap:10px; } }
+  @media(max-width:760px){
+    .captable { min-width:560px; }
+    .captable td { font-size:18px;padding:11px 0 11px 10px; }
+    .captable td:first-child { font-size:16px;white-space:normal; }
+    .captable th { font-size:11px;letter-spacing:.1em;padding-left:10px; }
+  }</style>
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -745,6 +799,70 @@
           <div class="eyebrow reveal d1" data-edit>The destination effect</div>
           <h2 class="reveal d2"><span data-edit>Event day,</span><br><span data-edit>holiday week.</span></h2>
           <p class="lead reveal d3" data-edit>Lake Balaton is Hungary's largest tourist magnet — beaches, spas, wineries, thermals, sailing and vibrant nightlife. <strong>All within a 10-20 mins drive from the circuit while still just an hour away from Budapest.</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14b. PLANS -->
+  <section class="section dark">
+    <div class="bg" data-bg="pit-garages.jpg"></div>
+    <div class="content">
+      <div class="eyebrow reveal" data-edit>Plans &amp; drawings</div>
+      <h2 class="reveal d1"><span data-edit>Measure it</span><br><span data-edit>yourself.</span></h2>
+      <p class="lead reveal d2" data-edit>Scaled drawings of the rooms and the ground, so the floor plan can be built before anyone visits.</p>
+      <div class="plans reveal d3">
+        <a class="plan" href="plans/lounge-1.pdf" target="_blank" rel="noopener">
+          <div class="t" data-edit>Lounge 1</div><div class="d" data-edit>628 m&sup2;, first floor - podium, backstage and three pit-lane terraces</div><div class="f" data-edit>PDF</div>
+        </a>
+        <a class="plan" href="plans/lounge-2.pdf" target="_blank" rel="noopener">
+          <div class="t" data-edit>Lounge 2</div><div class="d" data-edit>646 m&sup2;, first floor - bar and professional kitchen</div><div class="f" data-edit>PDF</div>
+        </a>
+        <a class="plan" href="plans/lounge-3.pdf" target="_blank" rel="noopener">
+          <div class="t" data-edit>Lounge 3</div><div class="d" data-edit>784 m&sup2;, first floor - the largest of the three</div><div class="f" data-edit>PDF</div>
+        </a>
+        <a class="plan" href="plans/pit-garages.pdf" target="_blank" rel="noopener">
+          <div class="t" data-edit>Pit garages 1-16</div><div class="d" data-edit>Ground floor of the same building, under the lounges</div><div class="f" data-edit>PDF</div>
+        </a>
+        <a class="plan" href="plans/paddock-parking.pdf" target="_blank" rel="noopener">
+          <div class="t" data-edit>Paddock &amp; parking</div><div class="d" data-edit>All three paddocks measured, with truck and car slot counts</div><div class="f" data-edit>PDF</div>
+        </a>
+        <a class="plan" href="plans/paddock-services.pdf" target="_blank" rel="noopener">
+          <div class="t" data-edit>Power &amp; water</div><div class="d" data-edit>Where the 230V, 400V, water and sewer points sit</div><div class="f" data-edit>PDF</div>
+        </a>
+        <a class="plan" href="plans/circuit-layout.jpg" target="_blank" rel="noopener">
+          <div class="t" data-edit>Circuit layout</div><div class="d" data-edit>General site drawing, 2024</div><div class="f" data-edit>JPG</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14c. SAFETY -->
+  <section class="section">
+    <div class="bg" data-bg="safety-tecpro.jpg" style="background-position:center 55%;"></div>
+    <div class="content">
+      <div class="two-col">
+        <div>
+          <div class="eyebrow reveal" data-edit>Safety</div>
+          <h2 class="reveal d1"><span data-edit>Run to</span><br><span data-edit>Grand Prix standard.</span></h2>
+          <p class="lead reveal d2" data-edit>TecPro barriers, six kilometres of debris fencing and concrete protection, MyLaps timing and GPS. FIM Grade A and FIA Grade 2 homologation - the specification a World Championship round is run to, in place on an ordinary Tuesday.</p>
+          <p class="reveal d3" data-edit style="margin-top:1.5rem;">After the 2025 Hungarian Grand Prix, the FIM's safety delegate called the circuit's preparations and operations exemplary and asked for no further modifications before the next one. Marshals, medical cover and race control are on site whenever the track is live.</p>
+          <div class="facilities reveal d4">
+            <div class="fac"><span class="dot"></span><span data-edit>FIM Grade A &middot; FIA Grade 2</span></div>
+            <div class="fac"><span class="dot"></span><span data-edit>TecPro barriers</span></div>
+            <div class="fac"><span class="dot"></span><span data-edit>6 km debris fencing</span></div>
+            <div class="fac"><span class="dot"></span><span data-edit>MyLaps timing &amp; GPS</span></div>
+          </div>
+        </div>
+        <div class="visual reveal slide-right" style="overflow:visible;">
+          <div class="gallery-wrap" data-gallery="safety">
+            <div class="gallery-slide active"><img src="safety-fia-plate.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">FIA-homologated barrier</div></div>
+            <div class="gallery-slide"><img data-src="safety-tecpro.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">TecPro run</div></div>
+            <div class="gallery-slide"><img data-src="safety-fencing.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Debris fencing &amp; gravel</div></div>
+          </div>
+          <button class="gallery-arrow gallery-prev-intro" onclick="gal('safety',-1)">&#8249;</button>
+          <button class="gallery-arrow gallery-next-intro" onclick="gal('safety',1)">&#8250;</button>
+          <div class="gallery-dots" data-dots="safety"></div>
         </div>
       </div>
     </div>
