@@ -787,6 +787,38 @@
     </div>
   </section>
 
+  <!-- ARRIVAL BY AIR -->
+  <section class="section">
+    <div class="bg-video"><video autoplay muted loop playsinline preload="none" data-src="air-bg.mp4"></video></div>
+    <div class="content">
+      <div class="two-col">
+        <div>
+          <div class="eyebrow reveal" data-edit>Arrival by air</div>
+          <h2 class="reveal d1"><span data-edit>Land at</span><br><span data-edit>the gate.</span></h2>
+          <p class="lead reveal d2" data-edit>A helipad inside the paddock, and a 750 m strip running alongside the circuit. Guests step off, walk in, and are in the room - no transfer, no convoy, no hour on the M7.</p>
+          <p class="reveal d3" data-edit style="margin-top:1.5rem;">The strip takes light aircraft and turboprops; two Pilatus PC-12s on an ordinary afternoon. For anything larger, Budapest is an hour away by road and Vienna two and a quarter.</p>
+          <div class="facilities reveal d4">
+            <div class="fac"><span class="dot"></span><span data-edit>Helipad in the paddock</span></div>
+            <div class="fac"><span class="dot"></span><span data-edit>750 m strip alongside</span></div>
+            <div class="fac"><span class="dot"></span><span data-edit>Budapest 1h by road</span></div>
+            <div class="fac"><span class="dot"></span><span data-edit>Vienna 2h 15m</span></div>
+          </div>
+        </div>
+        <div class="visual reveal slide-right" style="overflow:visible;">
+          <div class="gallery-wrap" data-gallery="air">
+            <div class="gallery-slide active"><img src="air-aerial-circuit.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Circuit, strip and the lake beyond</div></div>
+            <div class="gallery-slide"><img data-src="air-cessna-strip.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">On the strip</div></div>
+            <div class="gallery-slide"><img data-src="air-aerial-lake.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Downwind over Balaton</div></div>
+            <div class="gallery-slide"><img data-src="air-aerial-wide.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">The whole site from the air</div></div>
+          </div>
+          <button class="gallery-arrow gallery-prev-intro" onclick="gal('air',-1)">&#8249;</button>
+          <button class="gallery-arrow gallery-next-intro" onclick="gal('air',1)">&#8250;</button>
+          <div class="gallery-dots" data-dots="air"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 14. DESTINATION EFFECT -->
   <section class="section">
     <div class="bg" data-bg="lake-aerial.jpg"></div>
@@ -845,13 +877,15 @@
         <div>
           <div class="eyebrow reveal" data-edit>Safety</div>
           <h2 class="reveal d1"><span data-edit>Run to</span><br><span data-edit>Grand Prix standard.</span></h2>
-          <p class="lead reveal d2" data-edit>TecPro barriers, six kilometres of debris fencing and concrete protection, MyLaps timing and GPS. FIM Grade A and FIA Grade 2 homologation - the specification a World Championship round is run to, in place on an ordinary Tuesday.</p>
-          <p class="reveal d3" data-edit style="margin-top:1.5rem;">After the 2025 Hungarian Grand Prix, the FIM's safety delegate called the circuit's preparations and operations exemplary and asked for no further modifications before the next one. Marshals, medical cover and race control are on site whenever the track is live.</p>
+          <p class="lead reveal d2" data-edit>TecPro barriers, six kilometres of debris fencing and concrete protection, MyLaps timing and GPS, and a full trackside LED signalling system. FIM Grade A and FIA Grade 2 homologation - the specification a World Championship round is run to, in place on an ordinary Tuesday.</p>
+          <p class="reveal d3" data-edit style="margin-top:1.5rem;">After the 2025 Hungarian Grand Prix, the FIM's safety delegate called the circuit's preparations and operations exemplary. Marshal posts, medical centre, extraction and race control are staffed by a top-tier crew trained by the best in the sport.</p>
           <div class="facilities reveal d4">
             <div class="fac"><span class="dot"></span><span data-edit>FIM Grade A &middot; FIA Grade 2</span></div>
             <div class="fac"><span class="dot"></span><span data-edit>TecPro barriers</span></div>
             <div class="fac"><span class="dot"></span><span data-edit>6 km debris fencing</span></div>
             <div class="fac"><span class="dot"></span><span data-edit>MyLaps timing &amp; GPS</span></div>
+            <div class="fac"><span class="dot"></span><span data-edit>Trackside LED panels</span></div>
+            <div class="fac"><span class="dot"></span><span data-edit>Mobile dash flag-lights</span></div>
           </div>
         </div>
         <div class="visual reveal slide-right" style="overflow:visible;">
@@ -1002,22 +1036,25 @@
   }, { rootMargin: '75% 0px' });
   document.querySelectorAll('.bg[data-bg]').forEach(function (el) { bgIO.observe(el); });
 
-  const vid = document.querySelector('video[data-src]');
-  if (vid) {
-    const vidIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
+  // Every background video waits until its section is nearly in view.
+  // There is more than one now, so this walks them all.
+  const vidIO = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      const v = e.target;
+      const src = v.getAttribute('data-src');
+      if (src) {
         const s = document.createElement('source');
-        s.src = vid.getAttribute('data-src');
+        s.src = src;
         s.type = 'video/mp4';
-        vid.appendChild(s);
-        vid.load();
-        vid.removeAttribute('data-src');
-        vidIO.unobserve(vid);
-      });
-    }, { rootMargin: '60% 0px' });
-    vidIO.observe(vid);
-  }
+        v.appendChild(s);
+        v.load();
+        v.removeAttribute('data-src');
+      }
+      vidIO.unobserve(v);
+    });
+  }, { rootMargin: '60% 0px' });
+  document.querySelectorAll('video[data-src]').forEach(function (v) { vidIO.observe(v); });
 
   document.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
