@@ -246,12 +246,12 @@
     overflow: hidden;
     box-shadow: 0 30px 90px rgba(0,0,0,.5);
   }
-  .two-col .visual img {
+  .two-col .visual > img {
     width: 100%; height: 100%; object-fit: cover;
     transition: transform 12s ease-out;
     transform: scale(1.05);
   }
-  .two-col .visual.in img { transform: scale(1); }
+  .two-col .visual.in > img { transform: scale(1); }
   /* Hotel video bg */
   .bg-video { position:absolute;inset:0;z-index:0;overflow:hidden; }
   .bg-video video { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55; }
@@ -260,7 +260,7 @@
   .gallery-wrap { position:absolute;inset:0; }
   .gallery-slide { position:absolute;inset:0;opacity:0;transition:opacity .6s ease; }
   .gallery-slide.active { opacity:1; }
-  .gallery-slide img { width:100%;height:100%;object-fit:cover; }
+  .gallery-slide img { width:100%;height:100%;object-fit:cover;display:block;vertical-align:middle; }
   .gallery-caption-intro { position:absolute;bottom:0;left:0;right:0;padding:14px 18px 12px;background:linear-gradient(transparent,rgba(0,0,0,0.7));font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.85); }
   .gallery-arrow { position:absolute;top:50%;transform:translateY(-50%);width:60px;height:60px;border-radius:50%;background:rgba(10,20,34,0.55);border:2px solid rgba(255,255,255,0.55);color:#fff;font-size:32px;cursor:pointer;z-index:6;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s;line-height:1;backdrop-filter:blur(4px); }
   .gallery-arrow:hover { background:rgba(67,126,209,0.85);border-color:#437ed1; }
@@ -328,7 +328,7 @@
        a seam if both halves measure the same - a gap is shared between them,
        so it would be half a gap out. Spacing lives on the items instead. */
     gap: 0;
-    animation: scroll 40s linear infinite;
+    animation: scroll 80s linear infinite;
     white-space: nowrap;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700;
@@ -1047,7 +1047,7 @@
       <p class="lead reveal d2" style="text-align:center;" data-edit>Tell us the dates and the headcount — we'll build the day around them.</p>
       <div class="cta-buttons reveal d3">
         <a href="mailto:roy@balatonparkcircuit.com" class="btn primary">
-          Email Us <span>→</span>
+          Come Visit <span>→</span>
         </a>
         <a href="https://intro.balatonpark.com" target="_blank" rel="noopener" class="btn ghost">The Circuit</a>
       </div>
