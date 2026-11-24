@@ -239,6 +239,10 @@
     width: 100%;
   }
   .two-col.flip { grid-template-columns: 1fr 1.1fr; }
+  /* Text into the first column, visual into the second, without moving
+     either in the markup. */
+  .two-col.swapped > *:first-child { order: 2; }
+  .two-col.swapped > *:last-child  { order: 1; }
   .two-col .visual {
     position: relative;
     height: 65vh;
@@ -255,6 +259,14 @@
   /* Hotel video bg */
   .bg-video { position:absolute;inset:0;z-index:0;overflow:hidden; }
   .bg-video video { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55; }
+  .vidcap {
+    position:absolute;left:0;bottom:0;z-index:6;padding:14px 6vw 18px;
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;
+    letter-spacing:.16em;text-transform:uppercase;color:rgba(245,247,251,.6);
+    pointer-events:none;
+  }
+  @media(max-width:760px){ .vidcap { font-size:11px;padding:10px 6vw 14px; } }
+  .bg-video-right video { object-position: 78% center; }
   .bg-video::after { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,20,34,.15) 0%,rgba(10,20,34,.42) 100%); }
   /* Galleries */
   .gallery-wrap { position:absolute;inset:0; }
@@ -538,10 +550,10 @@
   </section>
 
   <!-- 1b. SALES VIDEO -->
-  <section class="section" style="min-height:auto;background:#000;position:relative;overflow:hidden;">
-    <div style="position:relative;width:100%;line-height:0;">
+  <section class="section" style="background:#000;position:relative;overflow:hidden;padding:0;">
+    <div style="position:relative;width:100%;height:100vh;height:100dvh;line-height:0;">
       <video id="salesVideo" src="sales.mp4"
-        style="width:100%;display:block;max-height:80vh;object-fit:cover;"
+        style="width:100%;height:100%;display:block;object-fit:cover;"
         preload="metadata" playsinline muted>
       </video>
       <!-- Edge fades -->
@@ -553,7 +565,7 @@
         </div>
       </div>
       <!-- Unmute button -->
-      <button id="salesUnmute" onclick="toggleMute()" style="position:absolute;bottom:20px;right:20px;z-index:4;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.4);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:7px 14px;border-radius:4px;cursor:pointer;backdrop-filter:blur(4px);display:none;">🔇 Unmuted — tap to mute</button>
+      <button id="salesUnmute" onclick="toggleMute()" style="position:absolute;bottom:20px;left:20px;z-index:4;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.4);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:7px 14px;border-radius:4px;cursor:pointer;backdrop-filter:blur(4px);display:none;">🔇 Unmuted — tap to mute</button>
     </div>
   </section>
   <script>
@@ -681,22 +693,21 @@
 
   <!-- 5. DRIVING PROGRAMMES -->
   <section class="section">
-    <div class="bg" data-bg="track-lineup.jpg"></div>
+    <div class="bg-video bg-video-right"><video autoplay muted loop playsinline preload="none" data-src="incentive-bg.mp4"></video></div>
+    <div class="vidcap" data-edit>A lap of the circuit, in the passenger seat</div>
     <div class="content">
-      <div class="two-col flip">
-        <div class="visual reveal slide-left" style="overflow:visible;">
+      <div class="two-col flip swapped">
+        <div class="visual reveal slide-right" style="overflow:visible;">
           <div class="gallery-wrap" data-gallery="drive">
-            <div class="gallery-slide active"><img src="drive-296-lineup.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Fleet staged in the pit lane</div></div>
-            <div class="gallery-slide"><img data-src="venue-launch-room.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Driver briefing</div></div>
-            <div class="gallery-slide"><img data-src="drive-helmets-white.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Kit, issued on site</div></div>
+            <div class="gallery-slide active"><img src="p75-ferris.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Fairground on the apron</div></div>
             <div class="gallery-slide"><img data-src="drive-overalls.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Suits and helmets, issued on site</div></div>
-            <div class="gallery-slide"><img data-src="drive-296-flags.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">On the apron</div></div>
-            <div class="gallery-slide"><img data-src="drive-pitbuilding-flags.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Pit building, taken over</div></div>
-            <div class="gallery-slide"><img data-src="drive-296-rear.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Numbered for the day</div></div>
-            <div class="gallery-slide"><img data-src="drive-296-pitlane.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Garage row</div></div>
-            <div class="gallery-slide"><img data-src="venue-experience-car.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Experience fleet</div></div>
-            <div class="gallery-slide"><img data-src="drive-ferrari-detail.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Details for the camera</div></div>
-            <div class="gallery-slide"><img data-src="venue-briefing-helmets.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Helmets &amp; kit wall</div></div>
+            <div class="gallery-slide"><img data-src="offroad-dust.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Off-road, after lunch</div></div>
+            <div class="gallery-slide"><img data-src="venue-launch-room.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Driver briefing</div></div>
+            <div class="gallery-slide"><img data-src="air-display.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Aerobatic display over the circuit</div></div>
+            <div class="gallery-slide"><img data-src="drive-live-music.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Live music after dinner</div></div>
+            <div class="gallery-slide"><img data-src="p75-simulator.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Racing simulators</div></div>
+            <div class="gallery-slide"><img data-src="p75-kids-zone.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Activity zone</div></div>
+            <div class="gallery-slide"><img data-src="p75-kids-karts.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Pedal karts on the apron</div></div>
           </div>
           <button class="gallery-arrow gallery-prev-intro" onclick="gal('drive',-1)">&#8249;</button>
           <button class="gallery-arrow gallery-next-intro" onclick="gal('drive',1)">&#8250;</button>
