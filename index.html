@@ -280,7 +280,7 @@
   /* Track layouts */
   .layouts-intro { display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;width:100%;margin-top:2.5rem; }
   .layout-intro-card { background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;overflow:hidden;text-align:center; }
-  .layout-intro-card img { width:100%;display:block; }
+  .layout-intro-card img { width:100%;display:block;max-height:46vh;object-fit:contain; }
   .layout-intro-label { padding:12px 0;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#a8cef0; }
   @media(max-width:768px){ .layouts-intro{grid-template-columns:1fr;} }
   .facilities {
@@ -428,7 +428,8 @@
   }
 
   /* Plans the client can open or download */
-  .plans { display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:2.2rem;width:100%;max-width:960px; }
+  .plans { display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:1.8rem;width:100%;max-width:1180px; }
+  @media(max-width:1150px){ .plans { grid-template-columns:repeat(3,1fr);max-width:960px; } }
   .plan {
     display:block;padding:16px 17px 13px;text-decoration:none;
     background:rgba(10,20,34,.55);border:1px solid var(--border);
@@ -452,7 +453,54 @@
     .captable td { font-size:18px;padding:11px 0 11px 10px; }
     .captable td:first-child { font-size:16px;white-space:normal; }
     .captable th { font-size:11px;letter-spacing:.1em;padding-left:10px; }
-  }</style>
+  }
+  /* Sections whose content is a grid or a table need the vertical padding
+     back, or they grow past the viewport and scroll-snap stops settling. */
+  .section.dense .content { padding: 6vh 8vw; }
+  @media (max-width:760px){ .section.dense .content { padding: 8vh 6vw; } }
+
+  /* Short screens. Proximity snapping stops settling the moment a section
+     grows taller than the viewport, and the page then scrolls free, so the
+     type and spacing tighten in two steps rather than letting that happen. */
+  @media (min-width:761px) and (max-height:940px) {
+    .content { padding: 5vh 8vw; }
+    h2 { font-size: clamp(34px, 4.4vw, 66px); margin-bottom: 1.1rem; }
+    .facilities { gap: .9rem 2.2rem; margin-top: 1.6rem; }
+    .marquee { margin-top: 1.5rem; }
+    .brandstrip { margin-top: 1.1rem; }
+    .brandstrip img { height: 78px; }
+    .capsub { margin: .9rem 0 .35rem; }
+    .captable td { font-size: 17px; padding: 6px 0 6px 12px; }
+    .captable td:first-child { font-size: 15px; }
+    .capnote { margin-top: .9rem; font-size: 13.5px; }
+    .plans { margin-top: 1.3rem; gap: 10px; }
+    .plan { padding: 12px 14px 10px; }
+    .plan .d { min-height: 32px; font-size: 12.5px; }
+    .pillars { margin-top: 1.6rem; }
+    .reach-list { margin-top: 1.4rem; }
+  }
+  @media (min-width:761px) and (max-height:810px) {
+    .content { padding: 3.2vh 8vw; }
+    h2 { font-size: clamp(32px, 3.9vw, 56px); margin-bottom: .9rem; }
+    .eyebrow { margin-bottom: .8rem; }
+    .facilities { gap: .7rem 2rem; margin-top: 1.2rem; }
+    .marquee { margin-top: 1.1rem; }
+    .brandstrip { margin-top: .9rem; }
+    .brandstrip img { height: 66px; }
+    .brandstrip figcaption { font-size: 10px; margin-top: 4px; }
+    .captable td { font-size: 15.5px; padding: 5px 0 5px 10px; }
+    .captable td:first-child { font-size: 14px; }
+    .captable td.note { font-size: 13.5px; line-height: 1.4; }
+    .capnote { margin-top: .7rem; font-size: 12.5px; }
+    .plan .d { min-height: 26px; font-size: 12px; }
+    .plans { gap: 8px; margin-top: 1rem; }
+  }
+  /* Below this there is no height left to win back; half-snapping feels
+     worse than not snapping. */
+  @media (min-width:761px) and (max-height:700px) {
+    html { scroll-snap-type: none; }
+  }
+</style>
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -717,7 +765,7 @@
   </section>
 
   <!-- 11. TRACK LAYOUTS -->
-  <section class="section dark">
+  <section class="section dark" dense>
     <div class="bg" data-bg="pit-garages.jpg"></div>
     <div class="content center">
       <div class="eyebrow reveal">Track Layouts</div>
@@ -741,7 +789,7 @@
   </section>
 
   <!-- 12. STAY & DINE -->
-  <section class="section">
+  <section class="section" dense>
     <div class="bg-video"><video autoplay muted loop playsinline preload="none" data-src="hotel-bg.mp4"></video></div>
     <div class="content">
       <div class="two-col">
@@ -792,7 +840,7 @@
   </section>
 
   <!-- ARRIVAL BY AIR -->
-  <section class="section">
+  <section class="section" dense>
     <div class="bg-video"><video autoplay muted loop playsinline preload="none" data-src="air-bg.mp4"></video></div>
     <div class="vidcap" data-edit>PC-12 arrival at Balaton Park</div>
     <div class="content">
@@ -842,8 +890,8 @@
   </section>
 
   <!-- 14b. PLANS -->
-  <section class="section dark">
-    <div class="bg" data-bg="pit-garages.jpg"></div>
+  <section class="section dark dense">
+    <div class="bg" data-bg="air-helipad.jpg"></div>
     <div class="content">
       <div class="eyebrow reveal" data-edit>Plans &amp; drawings</div>
       <h2 class="reveal d1"><span data-edit>Measure it</span><br><span data-edit>yourself.</span></h2>
@@ -875,7 +923,7 @@
   </section>
 
   <!-- 14c. SAFETY -->
-  <section class="section">
+  <section class="section dense">
     <div class="bg" data-bg="safety-tecpro.jpg" style="background-position:center 55%;"></div>
     <div class="content">
       <div class="two-col">
