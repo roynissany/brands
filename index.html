@@ -320,6 +320,10 @@
   }
   .marquee-track {
     display: flex;
+    /* Must size to its contents - as a block-level flex box it took the
+       clipped width of .marquee, so translateX(-50%) moved half a container
+       width and snapped back long before the list had run. */
+    width: max-content;
     /* No flex `gap`. The loop translates by exactly -50%, which only lands on
        a seam if both halves measure the same - a gap is shared between them,
        so it would be half a gap out. Spacing lives on the items instead. */
@@ -653,6 +657,7 @@
             <div class="gallery-slide active"><img src="drive-ferrari-plinth.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Guest welcome pack</div></div>
             <div class="gallery-slide"><img data-src="launch-registration.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Branded check-in desk</div></div>
             <div class="gallery-slide"><img data-src="brand-staircase.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Branded entrance staircase, built for the event</div></div>
+            <div class="gallery-slide"><img data-src="brand-staircase-porsche.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Branded stair bridge over the pit lane</div></div>
             <div class="gallery-slide"><img data-src="brand-lounge-screens.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Your mark on the screens, inside</div></div>
             <div class="gallery-slide"><img data-src="brand-flag-avenue.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Your flags on the approach road</div></div>
             <div class="gallery-slide"><img data-src="expo-stand-lounge.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">A stand built inside the lounge</div></div>
@@ -771,18 +776,19 @@
       <div class="two-col flip">
         <div class="visual reveal slide-left" style="overflow:visible;">
           <div class="gallery-wrap" data-gallery="hosp">
-            <div class="gallery-slide active"><img src="food-plated-loin.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Plated at Lavender Park</div></div>
-            <div class="gallery-slide"><img data-src="food-tartare-spoons.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Canap&eacute;s between sessions</div></div>
+            <div class="gallery-slide active"><img src="hotel-g-09.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Plated at Lavender Park</div></div>
+            <div class="gallery-slide"><img data-src="hosp-chef-live.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Live cooking station</div></div>
             <div class="gallery-slide"><img data-src="food-pastry-glass.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Breakfast along the glass</div></div>
+            <div class="gallery-slide"><img data-src="food-plated-loin.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">From the kitchen</div></div>
+            <div class="gallery-slide"><img data-src="food-tartare-spoons.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Canap&eacute;s between sessions</div></div>
+            <div class="gallery-slide"><img data-src="food-canape-counter.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Served at the counter</div></div>
             <div class="gallery-slide"><img data-src="food-breakfast-track.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Served with the start line behind it</div></div>
             <div class="gallery-slide"><img data-src="hosp-buffet-spread.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Wraps, sandwiches and finger food</div></div>
             <div class="gallery-slide"><img data-src="food-hot-buffet.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Hot buffet at pit level</div></div>
-            <div class="gallery-slide"><img data-src="hosp-chef-live.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Live cooking station</div></div>
             <div class="gallery-slide"><img data-src="food-patisserie.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Patisserie counter</div></div>
             <div class="gallery-slide"><img data-src="food-dessert-buffet.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Dessert table, branded to the day</div></div>
             <div class="gallery-slide"><img data-src="food-burger.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">From the Lavender Park kitchen</div></div>
             <div class="gallery-slide"><img data-src="food-coffee.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Coffee, poured all day</div></div>
-            <div class="gallery-slide"><img data-src="hotel-g-08.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">Lavender Park Restaurant</div></div>
             <div class="gallery-slide"><img data-src="hotel-bar.jpg" alt="" loading="lazy"><div class="gallery-caption-intro">The bar</div></div>
           </div>
           <button class="gallery-arrow gallery-prev-intro" onclick="gal('hosp',-1)">&#8249;</button>
