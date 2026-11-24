@@ -546,6 +546,37 @@
     </div>
   </section>
 
+  <!-- 2b. SALES VIDEO -->
+  <section class="section" style="min-height:auto;background:#000;">
+    <div class="content" style="padding:0;position:relative;">
+      <div id="salesVideoWrap" style="position:relative;width:100%;cursor:pointer;line-height:0;" onclick="playSalesVideo()">
+        <video id="salesVideo" src="sales.mp4"
+          style="width:100%;display:block;max-height:80vh;object-fit:cover;"
+          preload="metadata" playsinline>
+        </video>
+        <!-- Play overlay -->
+        <div id="salesPlayOverlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.38);transition:opacity .3s;">
+          <div style="width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.18);border:2px solid rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+  function playSalesVideo() {
+    const v = document.getElementById('salesVideo');
+    const o = document.getElementById('salesPlayOverlay');
+    const w = document.getElementById('salesVideoWrap');
+    if (v.paused) {
+      v.play();
+      o.style.opacity = '0';
+      o.style.pointerEvents = 'none';
+      w.onclick = function(){ if(!v.paused){ v.pause(); o.style.opacity='1'; o.style.pointerEvents=''; } else { v.play(); o.style.opacity='0'; o.style.pointerEvents='none'; } };
+    }
+  }
+  </script>
+
   <!-- 3. THREE THINGS BRANDS DO HERE -->
   <section class="section dark">
     <div class="bg" data-bg="control-tower.jpg"></div>
