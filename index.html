@@ -123,6 +123,10 @@
   .section.side-right .content { align-items: flex-end; text-align: right; }
   .section.side-right .content .eyebrow::before { display: none; }
   .section.side-right .content p { margin-left: auto; }
+  /* Keep the hero headline off the photo's own blues: deeper scrim, lighter accent. */
+  .hero-bg::after {
+    background: linear-gradient(180deg, rgba(10,20,34,.62) 0%, rgba(10,20,34,.58) 40%, rgba(10,20,34,.8) 100%);
+  }
   @media (max-width: 760px) {
     .section.side-right .bg::after {
       background: linear-gradient(0deg, rgba(10,20,34,.94) 0%, rgba(10,20,34,.5) 55%, rgba(10,20,34,.3) 100%);
@@ -207,7 +211,7 @@
   strong { color: var(--ink); font-weight: 600; }
   .hero-title { font-size: clamp(56px, 11vw, 180px); line-height: 0.88; }
   .hero-title .line { display: block; }
-  .hero-title .accent { color: var(--red); position: relative; }
+  .hero-title .accent { color: #8fc0f2; position: relative; text-shadow: 0 2px 24px rgba(10,20,34,.6); }
   .scroll-cue {
     position: absolute;
     bottom: 50px; left: 50%;
